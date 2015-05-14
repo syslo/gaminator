@@ -8,7 +8,7 @@ import readline
 import rlcompleter
 import sys
 
-from .thing import _ThingType
+from .thing_type import _ThingType
 
 
 class _GaminatorInteractiveConsole(InteractiveConsole):

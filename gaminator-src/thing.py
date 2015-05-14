@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-class _ThingType(type):
-
-    _classes = dict()
-
-    def __init__(cls, name, bases, dct):
-        super(_ThingType, cls).__init__(name, bases, dct)
-        _ThingType._classes[name] = cls
+from .thing_type import _ThingType
 
 
 class PTI__Thing(object):

@@ -2,16 +2,20 @@
 
 
 from collections import defaultdict
+import pygame
 
 from .thing import PTI__Thing
+from .events import _EventEmitterMixim
 
 
-class PTI__World(PTI__Thing):
+class PTI__World(PTI__Thing, _EventEmitterMixim):
 
     def __init__(self, *args, **kwargs):
         self._things_by_class = defaultdict(set)
         self._things = set()
-        super(PTI__World, self).__init__(*args, **kwargs)
+
+        PTI__Thing.__init__(self, *args, **kwargs)
+        _EventEmitterMixim.__init__(self)
 
     def _connect_thing(self, thing):
         self._things.add(thing)
@@ -37,5 +41,6 @@ class PTI__World(PTI__Thing):
         pass
 
     def _tick(self):
+        self._tick_events()
         for thing in self._things:
             thing.PTI_thing__step()
