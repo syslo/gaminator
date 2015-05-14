@@ -6,6 +6,8 @@ from threading import Condition
 import traceback
 
 from .interactive import interact
+from .picture import PTI__Picture
+from .canvas import PTI__Canvas
 
 
 class _Gaminator:
@@ -49,7 +51,8 @@ class _Gaminator:
         pygame.init()
 
         pygame.display.set_mode((600, 400))
-        self._screen = pygame.display.get_surface()
+        self._screen = PTI__Picture(600, 400)
+        self._screen._set_surface(pygame.display.get_surface())
 
         clock = pygame.time.Clock()
 
@@ -68,9 +71,10 @@ class _Gaminator:
                         if event.type == pygame.QUIT:
                             self.PTI_gaminator__end()
 
-                    self._screen.fill((255, 255, 255, 0))
-
                     self._worlds[-1]._tick()
+
+                    self._screen._surface.fill((255,255,255,0))
+                    self._worlds[-1]._repaint(Canvas(self._screen))
 
                     pygame.display.flip()
                     clock.tick(self.FPS)
