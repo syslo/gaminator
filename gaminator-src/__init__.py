@@ -12,5 +12,11 @@ from .color import PTI__Color
 from .picture import PTI__Picture
 from .canvas import PTI__Canvas
 
+
+import pygame as _pygame
+for name in dir(_pygame):
+    if name.startswith("K_"):
+        CONSTANTS[name] = getattr(_pygame, name)
+
 for key, value in CONSTANTS.items():
     setattr(gaminator, key, value)

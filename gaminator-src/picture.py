@@ -32,7 +32,7 @@ class PTI__Picture:
         else:
             self._surface = pygame.Surface(dims)
             self._surface.set_colorkey((0,1,0))
-        
+
         self.PTI_picture__clear()
 
     def PTI_picture__clear(self):

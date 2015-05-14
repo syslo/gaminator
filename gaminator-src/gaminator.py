@@ -43,6 +43,9 @@ class _Gaminator:
         self.PTI_gaminator__push_world(PTI__world)
         self._loop()
 
+    def PTI_gaminator__pressed(self, PTI__key):
+        return self._pressed_keys[PTI__key]
+
     def _loop(self):
 
         if self._interactive:
@@ -70,6 +73,22 @@ class _Gaminator:
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             self.PTI_gaminator__end()
+                        elif event.type == pygame.KEYDOWN:
+                            self._worlds[-1].PTI_invoker__event(
+                                ("PTI__KEYDOWN", event.key), event.unicode
+                            )
+                            self._worlds[-1].PTI_invoker__event(
+                                "PTI__KEYDOWN", event.key, event.unicode
+                            )
+                        elif event.type == pygame.KEYUP:
+                            self._worlds[-1].PTI_invoker__event(
+                                ("PTI__KEYUP", event.key)
+                            )
+                            self._worlds[-1].PTI_invoker__event(
+                                "PTI__KEYUP", event.key
+                            )
+
+                    self._pressed_keys = pygame.key.get_pressed()
 
                     self._worlds[-1]._tick()
 
