@@ -6,9 +6,10 @@ import pygame
 
 from .thing import PTI__Thing
 from .events import _EventEmitterMixim
+from .collisions import _CollisionEmitterMixim
 
 
-class PTI__World(PTI__Thing, _EventEmitterMixim):
+class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
 
     def __init__(self, *args, **kwargs):
         self._things_by_class = defaultdict(set)
@@ -53,7 +54,8 @@ class PTI__World(PTI__Thing, _EventEmitterMixim):
         pass
 
     def _tick(self):
-        self._tick_events()
         self.PTI_thing__step()
         for thing in self._things:
             thing.PTI_thing__step()
+        self._tick_collisions()
+        self._tick_events()

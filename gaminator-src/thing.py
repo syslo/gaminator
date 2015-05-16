@@ -78,6 +78,23 @@ class PTI__Thing(object):
     def PTI_thing__border_down(self):
         return self.y + (1-self.PTI__y_align)*self._height
 
+    def PTI_thing__collides(self, PTI__other):
+        return (
+            max(
+                self.PTI_thing__border_left,
+                PTI__other.PTI_thing__border_left,
+            ) < min(
+                self.PTI_thing__border_right,
+                PTI__other.PTI_thing__border_right,
+            ) and max(
+                self.PTI_thing__border_up,
+                PTI__other.PTI_thing__border_up,
+            ) < min(
+                self.PTI_thing__border_down,
+                PTI__other.PTI_thing__border_down,
+            )
+        )
+
     def PTI_thing__repaint(self):
         self._will_repaint = True
 
