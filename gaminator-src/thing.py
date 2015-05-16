@@ -15,6 +15,7 @@ class PTI__Thing(object):
 
         self.x = 0
         self.y = 0
+        self._z = 0
         self.PTI__x_align = 0.5
         self.PTI__y_align = 0.5
         self._width = 20
@@ -43,6 +44,17 @@ class PTI__Thing(object):
         if self._world is not None:
             self._world._disconnect_thing(self)
         self._world = None
+
+    @property
+    def z(self):
+        return self._z
+
+    @z.setter
+    def z(self, z):
+        self._z = z
+        if self._world is not None:
+            self._world._recalculate_z = True
+
 
     @property
     def PTI__width(self):

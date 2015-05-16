@@ -22,16 +22,20 @@ class _EventEmitterMixim(object):
         self._events_queue_waiting = []
         self._events_queue_id = 0
 
-    def PTI_invoker__event(self, PTI__event, *args, **kwargs):
-        self._events_queue_waiting.append(
-            (0, PTI__event, self._events_queue_id, args, kwargs)
-        )
+    def PTI_invoker__timed_event(self, PTI__time, PTI__event, *args, **kwargs):
+        self._events_queue_waiting.append((
+            self.time + PTI__time, self._events_queue_id,
+            PTI__event, args, kwargs,
+        ))
         self._events_queue_id += 1
+
+    def PTI_invoker__event(self, PTI__event, *args, **kwargs):
+        self.PTI_invoker__timed_event(0, PTI__event, *args, **kwargs)
 
     def _tick_events(self):
 
-        while self._events_queue:
-            (_time, event, _id, args, kwargs) = self._events_queue[0]
+        while self._events_queue and self._events_queue[0][0] <= self.time:
+            (_time, _id, event, args, kwargs) = self._events_queue[0]
             for cls in self._things_by_class:
                 if isinstance(cls, _ThingType):
                     for fname in cls._gaminator_events[event]:
