@@ -12,16 +12,27 @@ PATTERN = re.compile(
 )
 
 
-def localize(src_root, dest_root, translation_file):
+def get_translation(translation_file):
 
     T = defaultdict(dict)
 
-    with open(translation_file, "rb") as f:
-        exec(f.read(), {"T": T})
+    if os.path.exists(translation_file):
+        with open(translation_file, "rb") as f:
+            exec(f.read(), {"T": T})
+
+    return T
+
+
+def localize(src_root, dest_root, translation_file):
+
+    T = get_translation(translation_file)
 
     def replacer(match):
         group, name = match.group("group")[1:], match.group("name")
-        return T.get(group, {}).get(name, name)
+        result = T.get(group, {}).get(name, name)
+        if not result:
+            return name
+        return result
 
     for src_dir, dirnames, filenames in os.walk(src_root):
         dest_dir = os.path.join(dest_root, os.path.relpath(src_dir, src_root))
@@ -57,6 +68,9 @@ def occurences(src_root):
 
 
 def generate(src_root, translation_file):
+
+    T = get_translation(translation_file)
+
     data = occurences(src_root)
 
     with codecs.open(translation_file, "w", "utf-8") as f:
@@ -65,6 +79,7 @@ def generate(src_root, translation_file):
 
         for group in sorted(data.keys()):
             for name in sorted(data[group].keys()):
+                value = T.get(group, {}).get(name, "")
                 for occurence in data[group][name]:
                     f.write("# %s:%d\n" % occurence)
-                f.write("T['%s']['%s'] = ''\n\n" % (group, name))
+                f.write("T['%s']['%s'] = '%s'\n\n" % (group, name, value))
