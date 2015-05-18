@@ -2,7 +2,7 @@
 
 from .constants import CONSTANTS
 
-from .gaminator import gaminator
+from .game import PTI__game
 from .thing import PTI__Thing
 from .world import PTI__World
 
@@ -20,4 +20,4 @@ for name in dir(_pygame):
         CONSTANTS[name] = getattr(_pygame, name)
 
 for key, value in CONSTANTS.items():
-    setattr(gaminator, key, value)
+    setattr(PTI__game, key, value)

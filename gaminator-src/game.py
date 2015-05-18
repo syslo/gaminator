@@ -10,7 +10,7 @@ from .picture import PTI__Picture
 from .canvas import PTI__Canvas
 
 
-class _Gaminator:
+class _Game:
 
     def __init__(self):
         self._end = False
@@ -19,31 +19,31 @@ class _Gaminator:
         self._screen = None
         self._worlds = []
         self._world_changes = []
-        self.FPS = 60
+        self.tps = 60
         pass
 
     @property
-    def PTI_gaminator__world(self):
+    def PTI_game__world(self):
         return self._worlds[-1]
 
-    def PTI_gaminator__end(self):
+    def PTI_game__end(self):
         self._end = True
 
-    def PTI_gaminator__push_world(self, PTI__world):
+    def PTI_game__push_world(self, PTI__world):
         self._world_changes.append((1, PTI__world))
 
-    def PTI_gaminator__swap_world(self, PTI__world):
+    def PTI_game__swap_world(self, PTI__world):
         self._world_changes.append((0, PTI__world))
 
-    def PTI_gaminator__pop_world(self):
+    def PTI_game__pop_world(self):
         self._world_changes.append((-1, None))
 
-    def PTI_gaminator__start(self, PTI__world, PTI__interactive=False):
+    def PTI_game__start(self, PTI__world, PTI__interactive=False):
         self._interactive = PTI__interactive
-        self.PTI_gaminator__push_world(PTI__world)
+        self.PTI_game__push_world(PTI__world)
         self._loop()
 
-    def PTI_gaminator__pressed(self, PTI__key):
+    def PTI_game__pressed(self, PTI__key):
         return self._pressed_keys[PTI__key]
 
     def _loop(self):
@@ -72,7 +72,7 @@ class _Gaminator:
 
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
-                            self.PTI_gaminator__end()
+                            self.PTI_game__end()
                         elif event.type == pygame.KEYDOWN:
                             self._worlds[-1].PTI_invoker__event(
                                 ("PTI__KEYDOWN", event.key), event.unicode
@@ -96,7 +96,7 @@ class _Gaminator:
                     self._worlds[-1]._repaint(Canvas(self._screen))
 
                     pygame.display.flip()
-                    clock.tick(self.FPS)
+                    clock.tick(self.tps)
         except:
             traceback.print_exc()
         finally:
@@ -115,4 +115,4 @@ class _Gaminator:
         self._world_changes = []
 
 
-gaminator = _Gaminator()
+PTI__game = _Game()
