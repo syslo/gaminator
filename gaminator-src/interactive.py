@@ -16,6 +16,7 @@ class _GaminatorInteractiveConsole(InteractiveConsole):
     def __init__(self, game):
         self.game = game
         locals = {}
+        exec('from gaminator import *', locals)
         locals.update(_ThingType._classes)
         readline.set_completer(rlcompleter.Completer(locals).complete)
         readline.parse_and_bind("tab: complete")
