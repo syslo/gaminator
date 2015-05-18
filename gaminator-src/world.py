@@ -27,6 +27,9 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         PTI__Thing.__init__(self, *args, **kwargs)
         _EventEmitterMixim.__init__(self)
 
+        self.PTI__x_align = 0
+        self.PTI__y_align = 0
+
         self.PTI__width = 600
         self.PTI__height = 400
 
