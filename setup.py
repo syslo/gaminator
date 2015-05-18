@@ -19,7 +19,7 @@ for trans_file, dest_root in LOCALES:
 
 setup(
     name="gaminator",
-    version="0.0.0",
+    version="0.0.1",
     author=u"Marián Horňák",
     author_email="marian.sysel.hornak@gmail.com",
     description=(""),
