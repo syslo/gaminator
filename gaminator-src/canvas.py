@@ -6,6 +6,10 @@ import pygame
 import pygame.gfxdraw
 
 
+def norm(x):
+    return int(round(x))
+
+
 class PTI__Canvas:
 
     def __init__(self, PTI__picture, PTI__color=None):
@@ -14,13 +18,13 @@ class PTI__Canvas:
 
     def PTI_draw__line(self, (x1, y1), (x2, y2)):
         pygame.gfxdraw.line(
-            self._surface, round(x1), round(y1), round(x2), round(y2),
+            self._surface, norm(x1), norm(y1), norm(x2), norm(y2),
             self.PTI__color,
         )
 
     def PTI_draw__pixel(self, (x, y)):
         pygame.gfxdraw.pixel(
-            self._surface, round(x), round(y), self.PTI__color,
+            self._surface, norm(x), norm(y), self.PTI__color,
         )
 
     def PTI_draw__rectangle(
@@ -28,7 +32,7 @@ class PTI__Canvas:
     ):
         params = (
             self._surface,
-            (round(x), round(y), round(PTI__width), round(PTI__height)),
+            (norm(x), norm(y), norm(PTI__width), norm(PTI__height)),
             self.PTI__color,
         )
         if PTI__filled:
@@ -39,7 +43,7 @@ class PTI__Canvas:
     def PTI_draw__ellipse(self, (x, y), rx, ry, PTI__filled=False):
         params = (
             self._surface,
-            int(round(x)), int(round(y)), int(round(rx)), int(round(ry)),
+            norm(x), norm(y), norm(rx), norm(ry),
             self.PTI__color,
         )
         if PTI__filled:
@@ -50,7 +54,7 @@ class PTI__Canvas:
     def PTI_draw__polygon(self, PTI__points, PTI__filled=False):
         params = (
             self._surface,
-            list(map(lambda (x, y): (round(x), round(y)), PTI__points)),
+            list(map(lambda (x, y): (norm(x), norm(y)), PTI__points)),
             self.PTI__color,
         )
         if PTI__filled:
@@ -59,4 +63,4 @@ class PTI__Canvas:
             pygame.gfxdraw.polygon(*params)
 
     def PTI_draw__picture(self, PTI__picture, (x, y)):
-           self._surface.blit(PTI__picture._surface, (round(x), round(y)))
+        self._surface.blit(PTI__picture._surface, (norm(x), norm(y)))
