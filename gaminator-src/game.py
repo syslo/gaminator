@@ -103,12 +103,6 @@ class _Game:
 
                     self._pressed_keys = pygame.key.get_pressed()
 
-                    if PTI__window._height != self._worlds[-1]._height:
-                        self._worlds[-1].PTI__height = PTI__window._height
-
-                    if PTI__window._width != self._worlds[-1]._width:
-                        self._worlds[-1].PTI__width = PTI__window._width
-
                     self._worlds[-1]._tick()
 
                     self._screen._surface.fill((255, 255, 255, 0))

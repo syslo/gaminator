@@ -6,12 +6,15 @@ from operator import attrgetter
 import pygame
 import time
 
-from .thing import PTI__Thing
+from .picture_thing import PTI__PictureThing
+from .picture import PTI__Picture
 from .events import _EventEmitterMixim
 from .collisions import _CollisionEmitterMixim
 
 
-class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
+class PTI__World(
+    PTI__PictureThing, _EventEmitterMixim, _CollisionEmitterMixim
+):
 
     def __init__(self, *args, **kwargs):
         self._start_time = time.time()
@@ -24,11 +27,13 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self._things_by_z = None
         self._recalculate_z = True
 
-        PTI__Thing.__init__(self, *args, **kwargs)
+        PTI__PictureThing.__init__(self, *args, **kwargs)
         _EventEmitterMixim.__init__(self)
 
         self.PTI__x_align = 0
         self.PTI__y_align = 0
+
+        self.PTI__picture = PTI__Picture(600, 400)
 
     @property
     def PTI_world__ticks(self):
@@ -37,10 +42,6 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
     @property
     def PTI_world__time(self):
         return self._time
-
-    @property
-    def PTI_world__background(self):
-        return self._picture
 
     def _repaint(self, canvas):
         if self._recalculate_z:
