@@ -1,17 +1,24 @@
 #  -*- coding: utf-8 -*-
 
 
+import color
 from .constants import CONSTANTS
 import pygame
+import os
 
 
 class PTI__Picture:
 
     def __init__(self, PTI__width, PTI__height, PTI__has_alpha=False):
+
         self._width = 0
         self._height = 0
         self._has_alpha = False
-        self.PTI_picture__reset(PTI__width, PTI__height, PTI__has_alpha)
+
+        if isinstance(PTI__width, pygame.Surface) and PTI__height is None:
+            self._set_surface(PTI__width)
+        else:
+            self.PTI_picture__reset(PTI__width, PTI__height, PTI__has_alpha)
 
     def PTI_picture__reset(
         self, PTI__width=None, PTI__height=None, PTI__has_alpha=None
@@ -31,12 +38,12 @@ class PTI__Picture:
             self._surface.convert_alpha()
         else:
             self._surface = pygame.Surface(dims)
-            self._surface.set_colorkey((0,1,0))
+            self._surface.set_colorkey((0, 1, 0))
 
         self.PTI_picture__clear()
 
     def PTI_picture__clear(self):
-        self._surface.fill((0,1,0,0))
+        self._surface.fill((0, 1, 0, 0))
 
     @property
     def PTI__width(self):
@@ -55,3 +62,18 @@ class PTI__Picture:
         self._width = surface.get_width()
         self._height = surface.get_height()
 
+
+def PTI__open_picture(*path):
+    surface = pygame.image.load(os.path.join(*path))
+    return Picture(surface, None)
+
+
+def PTI__text_to_picture(
+    PTI__text="", PTI_text__size=10, PTI__color=CONSTANTS["PTI__BLACK"],
+    PTI_text__bold=False, PTI_text__italic=False,
+):
+    font = pygame.font.SysFont(
+        None, PTI_text__size, bold=PTI_text__bold, italic=PTI_text__italic,
+    )
+    surface = font.render(PTI__text, False, PTI__color)
+    return Picture(surface, None)
