@@ -30,9 +30,6 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self.PTI__x_align = 0
         self.PTI__y_align = 0
 
-        self.PTI__width = 600
-        self.PTI__height = 400
-
     @property
     def PTI_world__ticks(self):
         return self._ticks

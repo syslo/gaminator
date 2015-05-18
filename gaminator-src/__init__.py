@@ -13,6 +13,8 @@ from .color import PTI__Color
 from .picture import PTI__Picture
 from .canvas import PTI__Canvas
 
+from .window import PTI__window
+
 
 import pygame as _pygame
 for name in dir(_pygame):

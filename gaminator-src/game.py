@@ -8,6 +8,7 @@ import traceback
 from .interactive import interact
 from .picture import PTI__Picture
 from .canvas import PTI__Canvas
+from .window import PTI__window
 
 
 class _Game:
@@ -20,6 +21,7 @@ class _Game:
         self._worlds = []
         self._world_changes = []
         self.tps = 60
+        self.PTI__autoescape = True
         pass
 
     @property
@@ -67,13 +69,24 @@ class _Game:
                     if not self._worlds:
                         break
 
+                    PTI__window._apply_changes()
+
                     if self._interactive:
                         self._lock.wait(0)
 
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             self.PTI_game__end()
+                        elif event.type == pygame.VIDEORESIZE:
+                            PTI__window._height = event.h
+                            PTI__window._width = event.w
                         elif event.type == pygame.KEYDOWN:
+                            if (
+                                self.PTI__autoescape and
+                                event.key == pygame.K_ESCAPE
+                            ):
+                                self.PTI_game__end()
+
                             self._worlds[-1].PTI_invoker__event(
                                 ("PTI__KEYDOWN", event.key), event.unicode
                             )
@@ -90,9 +103,15 @@ class _Game:
 
                     self._pressed_keys = pygame.key.get_pressed()
 
+                    if PTI__window._height != self._worlds[-1]._height:
+                        self._worlds[-1].PTI__height = PTI__window._height
+
+                    if PTI__window._width != self._worlds[-1]._width:
+                        self._worlds[-1].PTI__width = PTI__window._width
+
                     self._worlds[-1]._tick()
 
-                    self._screen._surface.fill((255,255,255,0))
+                    self._screen._surface.fill((255, 255, 255, 0))
                     self._worlds[-1]._repaint(Canvas(self._screen))
 
                     pygame.display.flip()
