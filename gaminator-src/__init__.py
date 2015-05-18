@@ -12,6 +12,7 @@ from .collisions import PTI_decorator__collision
 from .color import PTI__Color
 from .picture import PTI__Picture, PTI__open_picture, PTI__text_to_picture
 from .canvas import PTI__Canvas
+from .picture_thing import PTI__PictureThing
 
 from .window import PTI__window
 
