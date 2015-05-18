@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from localization.tool import localize
 
@@ -26,7 +26,7 @@ setup(
     license="MIT",
     keywords="",
     url="https://github.com/syslo/gaminator",
-    packages=list(map(lambda x: x[1], LOCALES)),
+    packages=find_packages(exclude=["gaminator-src"]),
     classifiers=[
         "Development Status :: 4 - Beta",
     ],
