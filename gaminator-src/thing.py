@@ -10,8 +10,13 @@ class PTI__Thing(object):
 
     __metaclass__ = _ThingType
 
+    _next_id = 1
+
     def __init__(self, *args, **kwargs):
         self._world = None
+
+        self.id = PTI__Thing._next_id
+        PTI__Thing._next_id += 1
 
         self.x = 0
         self.y = 0
@@ -54,7 +59,6 @@ class PTI__Thing(object):
         self._z = z
         if self._world is not None:
             self._world._recalculate_z = True
-
 
     @property
     def PTI__width(self):
