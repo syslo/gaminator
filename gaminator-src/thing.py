@@ -35,6 +35,11 @@ class PTI__Thing(object):
 
         self.PTI_thing__setup()
 
+        for cls in self.__class__.mro():
+            if isinstance(cls, _ThingType):
+                for fname in cls._gaminator_events['PTI__SETUP']:
+                    getattr(self, fname)()
+
     @property
     def PTI_thing__world(self):
         return self._world

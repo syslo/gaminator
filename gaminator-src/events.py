@@ -40,6 +40,10 @@ class _EventEmitterMixim(object):
 
     def _tick_events(self):
 
+        heapq.heappush(self._events_queue, (
+            self.time, -1, 'PTI__STEP', [], {},
+        ))
+
         while self._events_queue and self._events_queue[0][0] <= self.time:
             (_time, _id, event, args, kwargs) = self._events_queue[0]
             for cls in self._things_by_class:
