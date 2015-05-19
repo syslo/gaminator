@@ -12,7 +12,7 @@ class PTI__Thing(object):
 
     _next_id = 1
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self._world = None
 
         self.id = PTI__Thing._next_id
@@ -30,7 +30,10 @@ class PTI__Thing(object):
         self._will_resize = True
         self._picture = PTI__Picture(20, 20)
 
-        self.PTI_thing__setup(*args, **kwargs)
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+
+        self.PTI_thing__setup()
 
     @property
     def PTI_thing__world(self):

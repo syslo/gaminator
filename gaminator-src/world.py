@@ -18,7 +18,7 @@ from .exceptions import PTI_exception__SelfSubworlding
 
 class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self._start_time = time.time()
         self._time = 0
         self._ticks = 0
@@ -29,7 +29,7 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self._things_by_z = None
         self._recalculate_z = True
 
-        PTI__Thing.__init__(self, *args, **kwargs)
+        PTI__Thing.__init__(self, **kwargs)
         _EventEmitterMixim.__init__(self)
 
         self.PTI__x_align = 0
