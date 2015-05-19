@@ -107,7 +107,7 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
 
         if self._recalculate_z:
             self._things_by_z = list(
-                sorted(self._things, key=attrgetter('_z'))
+                sorted(self._things, key=lambda x: (x._z, x.id))
             )
             self._recalculate_z = False
         for thing in self._things_by_z:
