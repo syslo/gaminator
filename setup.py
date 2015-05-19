@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import os
-from setuptools import setup, find_packages
+from setuptools import setup
 
 from localization.tool import localize
 
 LOCALES = [
     ('default.py', 'gaminator'),
+]
+
+PACKAGES = [
+    '%s',
+    '%s.starter',
 ]
 
 ROOT = os.path.dirname(__file__)
@@ -17,6 +22,11 @@ for trans_file, dest_root in LOCALES:
     src_root = os.path.join(ROOT, 'gaminator-src')
     localize(src_root, dest_root, trans_file)
 
+def get_packages():
+    for _, dest_root in LOCALES:
+        for package in PACKAGES:
+            yield package % dest_root
+
 setup(
     name="gaminator",
     version="0.0.1",
@@ -26,7 +36,7 @@ setup(
     license="MIT",
     keywords="",
     url="https://github.com/syslo/gaminator",
-    packages=find_packages(exclude=["gaminator-src"]),
+    packages=list(get_packages()),
     classifiers=[
         "Development Status :: 4 - Beta",
     ],

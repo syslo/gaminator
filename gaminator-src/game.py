@@ -55,9 +55,8 @@ class _Game:
 
         pygame.init()
 
-        pygame.display.set_mode((600, 400))
-        self._screen = PTI__Picture(600, 400)
-        self._screen._set_surface(pygame.display.get_surface())
+        PTI__window._apply_changes()
+        self._screen = PTI__Picture(pygame.display.get_surface(), None)
 
         clock = pygame.time.Clock()
 
@@ -120,9 +119,11 @@ class _Game:
             if self._worlds:
                 self._worlds[-1]._deactivate()
             if action in [-1, 0] and self._worlds:
-                self._worlds.pop().znicVsetko()
+                w = self._worlds.pop()
+                w._world = None  # @HACK: Topworlds are kids of themselves
             if action in [0, 1]:
                 self._worlds.append(world)
+                world._world = world  # @HACK: Topworlds are kids of themselves
             if self._worlds:
                 self._worlds[-1]._activate()
         self._world_changes = []

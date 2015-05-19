@@ -10,8 +10,13 @@ class PTI__Thing(object):
 
     __metaclass__ = _ThingType
 
-    def __init__(self, *args, **kwargs):
+    _next_id = 1
+
+    def __init__(self, **kwargs):
         self._world = None
+
+        self.id = PTI__Thing._next_id
+        PTI__Thing._next_id += 1
 
         self.x = 0
         self.y = 0
@@ -25,7 +30,15 @@ class PTI__Thing(object):
         self._will_resize = True
         self._picture = PTI__Picture(20, 20)
 
-        self.PTI_thing__setup(*args, **kwargs)
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+
+        self.PTI_thing__setup()
+
+        for cls in self.__class__.mro():
+            if isinstance(cls, _ThingType):
+                for fname in cls._gaminator_events['PTI__SETUP']:
+                    getattr(self, fname)()
 
     @property
     def PTI_thing__world(self):
@@ -54,7 +67,6 @@ class PTI__Thing(object):
         self._z = z
         if self._world is not None:
             self._world._recalculate_z = True
-
 
     @property
     def PTI__width(self):

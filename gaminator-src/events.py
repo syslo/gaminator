@@ -27,12 +27,22 @@ class _EventEmitterMixim(object):
             self.time + PTI__time, self._events_queue_id,
             PTI__event, args, kwargs,
         ))
+
         self._events_queue_id += 1
+
+        for subworld in self.PTI_world__subworlds:
+            subworld.PTI_invoker__timed_event(
+                PTI__time, PTI__event, *args, **kwargs
+            )
 
     def PTI_invoker__event(self, PTI__event, *args, **kwargs):
         self.PTI_invoker__timed_event(0, PTI__event, *args, **kwargs)
 
     def _tick_events(self):
+
+        heapq.heappush(self._events_queue, (
+            self.time, -1, 'PTI__STEP', [], {},
+        ))
 
         while self._events_queue and self._events_queue[0][0] <= self.time:
             (_time, _id, event, args, kwargs) = self._events_queue[0]
@@ -41,7 +51,10 @@ class _EventEmitterMixim(object):
                     for fname in cls._gaminator_events[event]:
                         for thing in self._things_by_class[cls]:
                             getattr(thing, fname)(*args, **kwargs)
-
+            for cls in self.__class__.mro():
+                if isinstance(cls, _ThingType):
+                    for fname in cls._gaminator_events[event]:
+                        getattr(self, fname)(*args, **kwargs)
             heapq.heappop(self._events_queue)
 
         for event in self._events_queue_waiting:
