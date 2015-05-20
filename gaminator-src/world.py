@@ -29,8 +29,8 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self._things_by_z = None
         self._recalculate_z = True
 
-        PTI__Thing.__init__(self, **kwargs)
         _EventEmitterMixim.__init__(self)
+        PTI__Thing.__init__(self, **kwargs)
 
         self.PTI__x_align = 0
         self.PTI__y_align = 0
