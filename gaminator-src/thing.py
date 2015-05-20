@@ -35,10 +35,15 @@ class PTI__Thing(object):
 
         self.PTI_thing__setup()
 
+        calls = []
+
         for cls in self.__class__.mro():
             if isinstance(cls, _ThingType):
                 for fname in cls._gaminator_events['PTI__SETUP']:
-                    getattr(self, fname)()
+                    calls.append(getattr(self, fname))
+
+        for f in calls:
+            f()
 
     @property
     def PTI_thing__world(self):

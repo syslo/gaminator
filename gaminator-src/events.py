@@ -19,11 +19,10 @@ class _EventEmitterMixim(object):
 
     def __init__(self):
         self._events_queue = []
-        self._events_queue_waiting = []
         self._events_queue_id = 0
 
     def PTI_invoker__timed_event(self, PTI__time, PTI__event, *args, **kwargs):
-        self._events_queue_waiting.append((
+        heapq.heappush(self._events_queue, (
             self.time + PTI__time, self._events_queue_id,
             PTI__event, args, kwargs,
         ))
@@ -44,20 +43,20 @@ class _EventEmitterMixim(object):
             self.time, -1, 'PTI__STEP', [], {},
         ))
 
+        calls = []
+
         while self._events_queue and self._events_queue[0][0] <= self.time:
             (_time, _id, event, args, kwargs) = self._events_queue[0]
             for cls in self._things_by_class:
                 if isinstance(cls, _ThingType):
                     for fname in cls._gaminator_events[event]:
                         for thing in self._things_by_class[cls]:
-                            getattr(thing, fname)(*args, **kwargs)
+                            calls.append((getattr(thing, fname), args, kwargs))
             for cls in self.__class__.mro():
                 if isinstance(cls, _ThingType):
                     for fname in cls._gaminator_events[event]:
-                        getattr(self, fname)(*args, **kwargs)
+                        calls.append((getattr(self, fname), args, kwargs))
             heapq.heappop(self._events_queue)
 
-        for event in self._events_queue_waiting:
-            heapq.heappush(self._events_queue, event)
-
-        self._events_queue_waiting = []
+        for f, args, kwargs in calls:
+            f(*args, **kwargs)

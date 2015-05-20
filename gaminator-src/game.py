@@ -123,6 +123,7 @@ class _Game:
                 w._world = None  # @HACK: Topworlds are kids of themselves
             if action in [0, 1]:
                 self._worlds.append(world)
+                world.world = None  # Disconect world from its parent
                 world._world = world  # @HACK: Topworlds are kids of themselves
             if self._worlds:
                 self._worlds[-1]._activate()
