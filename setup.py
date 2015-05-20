@@ -29,7 +29,7 @@ def get_packages():
 
 setup(
     name="gaminator",
-    version="0.0.2",
+    version="0.0.3",
     author=u"Marián Horňák",
     author_email="marian.sysel.hornak@gmail.com",
     description=(""),
