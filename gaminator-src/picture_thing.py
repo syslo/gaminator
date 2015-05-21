@@ -9,9 +9,8 @@ from .exceptions import PTI_exception__AssignmentUnsupported
 
 class PTI__PictureThing(PTI__Thing):
 
-    def __init__(self, **kwargs):
-        PTI__Thing.__init__(self, **kwargs)
-        self.PTI__picture = Picture(20, 20)
+    def _init_graphics(self):
+        self.PTI__picture = PTI__Picture(20, 20)
 
     @property
     def PTI__width(self):

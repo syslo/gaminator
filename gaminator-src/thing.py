@@ -23,12 +23,8 @@ class PTI__Thing(object):
         self._z = 0
         self.PTI__x_align = 0.5
         self.PTI__y_align = 0.5
-        self._width = 20
-        self._height = 20
 
-        self._will_repaint = True
-        self._will_resize = True
-        self._picture = PTI__Picture(20, 20)
+        self._init_graphics()
 
         for key in kwargs:
             setattr(self, key, kwargs[key])
@@ -44,6 +40,13 @@ class PTI__Thing(object):
 
         for f in calls:
             f()
+
+    def _init_graphics(self):
+        self._width = 20
+        self._height = 20
+        self._will_repaint = True
+        self._will_resize = True
+        self._picture = PTI__Picture(20, 20)
 
     @property
     def PTI_thing__world(self):
