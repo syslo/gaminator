@@ -35,7 +35,10 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self.PTI__x_align = 0
         self.PTI__y_align = 0
 
-        self.PTI__background = PTI__Picture(600, 400)
+    def _init_graphics(self):
+        self._width = PTI__window.PTI__width
+        self._height = PTI__window.PTI__height
+        self.PTI__background = PTI__Picture(self.PTI__width, self.PTI__height)
 
     @property
     def PTI__width(self):
