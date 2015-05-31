@@ -34,14 +34,14 @@ def get_packages():
 
 setup(
     name="gaminator",
-    version="0.0.4",
+    version="0.1.0",
     author=u"Marián Horňák",
     author_email="marian.sysel.hornak@gmail.com",
     description=DESCRIPTION,
     license="MIT",
     keywords=["education", "game"],
     url="https://github.com/syslo/gaminator",
-    download_url="https://github.com/syslo/gaminator/tarball/v0.0.4",
+    download_url="https://github.com/syslo/gaminator/tarball/v0.1.0",
     packages=list(get_packages()),
     classifiers=[
         "Development Status :: 4 - Beta",
