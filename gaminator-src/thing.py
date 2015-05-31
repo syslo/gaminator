@@ -38,8 +38,6 @@ class PTI__Thing(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-        self.PTI_thing__setup()
-
         calls = []
 
         for cls in self.__class__.mro():
