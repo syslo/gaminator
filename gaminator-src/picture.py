@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 
 
-import color
+from . import color
 from .constants import CONSTANTS
 import pygame
 import os
@@ -51,7 +51,7 @@ class PTI__Picture:
 
     @property
     def PTI__height(self):
-        return self._width
+        return self._height
 
     @property
     def PTI__has_alpha(self):

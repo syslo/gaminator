@@ -14,6 +14,11 @@ PACKAGES = [
     '%s.starter',
 ]
 
+DESCRIPTION = """A library for easy and fast development of simple games.
+For educational purposes.
+"""
+
+
 ROOT = os.path.dirname(__file__)
 
 for trans_file, dest_root in LOCALES:
@@ -32,10 +37,11 @@ setup(
     version="0.0.4",
     author=u"Marián Horňák",
     author_email="marian.sysel.hornak@gmail.com",
-    description=(""),
+    description=DESCRIPTION,
     license="MIT",
-    keywords="",
+    keywords=["education", "game"],
     url="https://github.com/syslo/gaminator",
+    download_url="https://github.com/syslo/gaminator/tarball/v0.0.4",
     packages=list(get_packages()),
     classifiers=[
         "Development Status :: 4 - Beta",

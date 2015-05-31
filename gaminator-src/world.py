@@ -157,11 +157,6 @@ class PTI__World(PTI__Thing, _EventEmitterMixim, _CollisionEmitterMixim):
         self._ticks += 1
         self._time = time.time() - self._start_time
 
-        if self._world == self:
-            self.PTI_thing__step()
-        for thing in self._things:
-            thing.PTI_thing__step()
-
         self._tick_collisions()
         self._tick_events()
 
