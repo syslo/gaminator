@@ -6,9 +6,18 @@ from .picture import PTI__Picture
 from .canvas import PTI__Canvas
 
 
-class PTI__Thing(object):
+# Python 2 and 3 compatible way to define metaclass
+def _with_metaclass(mcls):
+    def decorator(cls):
+        body = vars(cls).copy()
+        body.pop('__dict__', None)
+        body.pop('__weakref__', None)
+        return mcls(cls.__name__, cls.__bases__, body)
+    return decorator
 
-    __metaclass__ = _ThingType
+
+@_with_metaclass(_ThingType)
+class PTI__Thing(object):
 
     _next_id = 1
 

@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 
 
-import color
+from . import color
 from .constants import CONSTANTS
 import pygame
 import os
