@@ -41,14 +41,14 @@ class TranslateBuildPyCommand(build_py):
 
 setup(
     name="gaminator",
-    version="0.1.0",
+    version="0.1.1",
     author=u"Marián Horňák",
     author_email="marian.sysel.hornak@gmail.com",
     description=DESCRIPTION,
     license="MIT",
     keywords=["education", "game"],
     url="https://github.com/syslo/gaminator",
-    download_url="https://github.com/syslo/gaminator/tarball/v0.1.0",
+    download_url="https://github.com/syslo/gaminator/tarball/v0.1.1",
     packages=list(get_packages()),
     classifiers=[
         "Development Status :: 4 - Beta",
