@@ -2,9 +2,7 @@
 
 import os
 from setuptools import setup
-from setuptools.command.build_py import build_py
-
-from localization.tool import localize
+from setuptools.command.sdist import sdist
 
 LOCALES = [
     ('default.py', 'gaminator'),
@@ -27,16 +25,18 @@ def get_packages():
             yield package % dest_root
 
 
-class TranslateBuildPyCommand(build_py):
+class TranslateSDistCommand(sdist):
 
     def run(self):
+        from localization.tool import localize
+
         ROOT = os.path.dirname(__file__)
         for trans_file, dest_root in LOCALES:
             trans_file = os.path.join(ROOT, 'localization', 'data', trans_file)
             dest_root = os.path.join(ROOT, dest_root)
             src_root = os.path.join(ROOT, 'gaminator-src')
             localize(src_root, dest_root, trans_file)
-        build_py.run(self)
+        sdist.run(self)
 
 
 setup(
@@ -54,6 +54,6 @@ setup(
         "Development Status :: 4 - Beta",
     ],
     cmdclass={
-        'build_py': TranslateBuildPyCommand,
+        'sdist': TranslateSDistCommand,
     },
 )
