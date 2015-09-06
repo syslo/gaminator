@@ -8,6 +8,7 @@ from localization.tool import localize
 
 LOCALES = [
     ('default.py', 'gaminator'),
+    ('sk.py', 'gaminator_sk'),
 ]
 
 PACKAGES = [
