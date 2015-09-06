@@ -2,6 +2,7 @@
 
 import os
 from setuptools import setup
+from setuptools.command.build_py import build_py
 
 from localization.tool import localize
 
@@ -19,18 +20,23 @@ For educational purposes.
 """
 
 
-ROOT = os.path.dirname(__file__)
-
-for trans_file, dest_root in LOCALES:
-    trans_file = os.path.join(ROOT, 'localization', 'data', trans_file)
-    dest_root = os.path.join(ROOT, dest_root)
-    src_root = os.path.join(ROOT, 'gaminator-src')
-    localize(src_root, dest_root, trans_file)
-
 def get_packages():
     for _, dest_root in LOCALES:
         for package in PACKAGES:
             yield package % dest_root
+
+
+class TranslateBuildPyCommand(build_py):
+
+    def run(self):
+        ROOT = os.path.dirname(__file__)
+        for trans_file, dest_root in LOCALES:
+            trans_file = os.path.join(ROOT, 'localization', 'data', trans_file)
+            dest_root = os.path.join(ROOT, dest_root)
+            src_root = os.path.join(ROOT, 'gaminator-src')
+            localize(src_root, dest_root, trans_file)
+        build_py.run(self)
+
 
 setup(
     name="gaminator",
@@ -46,4 +52,7 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
     ],
+    cmdclass={
+        'build_py': TranslateBuildPyCommand,
+    },
 )
