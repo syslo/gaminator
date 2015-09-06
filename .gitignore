@@ -1,1 +1,6 @@
 *.pyc
+
+/build
+/dist
+/gaminator*
+~/gaminator-src
