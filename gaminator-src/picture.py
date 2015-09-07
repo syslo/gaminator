@@ -65,7 +65,7 @@ class PTI__Picture:
 
 def PTI__open_picture(*path):
     surface = pygame.image.load(os.path.join(*path))
-    return Picture(surface, None)
+    return PTI__Picture(surface, None)
 
 
 def PTI__text_to_picture(
@@ -76,4 +76,4 @@ def PTI__text_to_picture(
         None, PTI_text__size, bold=PTI_text__bold, italic=PTI_text__italic,
     )
     surface = font.render(PTI__text, False, PTI__color)
-    return Picture(surface, None)
+    return PTI__Picture(surface, None)

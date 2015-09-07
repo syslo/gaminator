@@ -23,7 +23,7 @@ class _EventEmitterMixim(object):
 
     def PTI_invoker__timed_event(self, PTI__time, PTI__event, *args, **kwargs):
         heapq.heappush(self._events_queue, (
-            self.time + PTI__time, self._events_queue_id,
+            self.PTI__time + PTI__time, self._events_queue_id,
             PTI__event, args, kwargs,
         ))
 
@@ -40,12 +40,12 @@ class _EventEmitterMixim(object):
     def _tick_events(self):
 
         heapq.heappush(self._events_queue, (
-            self.time, -1, 'PTI__STEP', [], {},
+            self.PTI__time, -1, 'PTI__STEP', [], {},
         ))
 
         calls = []
 
-        while self._events_queue and self._events_queue[0][0] <= self.time:
+        while self._events_queue and self._events_queue[0][0] <= self.PTI__time:
             (_time, _id, event, args, kwargs) = self._events_queue[0]
             for cls in self._things_by_class:
                 if isinstance(cls, _ThingType):

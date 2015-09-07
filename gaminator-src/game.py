@@ -105,7 +105,7 @@ class _Game:
                     self._worlds[-1]._tick()
 
                     self._screen._surface.fill((255, 255, 255, 0))
-                    self._worlds[-1]._repaint(Canvas(self._screen))
+                    self._worlds[-1]._repaint(PTI__Canvas(self._screen))
 
                     pygame.display.flip()
                     clock.tick(self.tps)

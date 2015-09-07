@@ -36,8 +36,8 @@ class PTI__PictureThing(PTI__Thing):
     def PTI__picture(self, PTI__picture):
         self._picture = PTI__picture
         self._canvas = PTI__Canvas(self._picture)
-        self._width = PTI__picture.width
-        self._height = PTI__picture.height
+        self._width = PTI__picture.PTI__width
+        self._height = PTI__picture.PTI__height
 
     @property
     def PTI__canvas(self):
